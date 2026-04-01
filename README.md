@@ -13,21 +13,21 @@ This repository(MDAD) is the official PyTorch implementation of the paper "A Mul
 <table align="center">
   <tr>
     <td align="center">
-      <img src="pictures/CDFA.png" width="300"/><br>
+      <img src="pictures/CDFA.png" width="400"/><br>
       <em>The schematic diagram of the Contrast-Driven Feature Aggregation (CDFA) module.</em>
     </td>
     <td align="center">
-      <img src="pictures/SDFM.png" width="300"/><br>
+      <img src="pictures/SDFM.png" width="400"/><br>
       <em>The detailed structure of the Scale-Aware Dynamic Fusion Module.</em>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <img src="pictures/SEA.png" width="300"/><br>
+      <img src="pictures/SEA.png" width="400"/><br>
       <em>The detailed structure of the Semantic Enhancement and Aggregation Module.</em>
     </td>
     <td align="center">
-      <img src="pictures/Visualization.png" width="300"/><br>
+      <img src="pictures/Visualization.png" width="400"/><br>
       <em>Visualization of Gaussian modeling and Wasserstein distance calculation for bounding boxes.</em>
     </td>
   </tr>
@@ -42,7 +42,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 
 ---
 
-##### Task1: Performance Comparison of Different Feature Enhancement Strategies on Backbone.
+#### Task1: Performance Comparison of Different Feature Enhancement Strategies on Backbone.
 
 | Backbone (Improvement 1)                   | mAP@50 ↑ | mAP@50:95 ↑ |
 |-------------------------------------------|----------|-------------|
@@ -57,7 +57,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | + Contrast Driven Feature Aggregation     | **0.840**| **0.616**   |
 
 
-##### Task2: Ablation Study on High-Level and Low-Level Feature Fusion Mechanisms.
+#### Task2: Ablation Study on High-Level and Low-Level Feature Fusion Mechanisms.
 
 | High-Level and Low-Level FeatureFusion (Improvement 2)      | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------|----------|-------------|
@@ -66,7 +66,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | **+ SDFM**        | **0.843**| **0.631**   |
   
 
-##### Task3: Impact of Different Detection Head Architectures on Detection Performance.
+#### Task3: Impact of Different Detection Head Architectures on Detection Performance.
 
 | Detection Head (Improvement 3)          | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------------|----------|-------------|
@@ -78,7 +78,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | **+ Detect-SEAM**       | **0.848**| **0.635**   |
   
 
-##### Task4: Comparative Analysis of Different Bounding Box Regression Loss Functions.
+#### Task4: Comparative Analysis of Different Bounding Box Regression Loss Functions.
 
 | Loss Function(Improvement 4)     | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------------------|----------|-------------|
@@ -91,7 +91,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | **+ NWD**                     | **0.857**| **0.642**   |
 
 
-##### Task5: Robustness Evaluation Under Varying Model Scales and Input Resolution.
+#### Task5: Robustness Evaluation Under Varying Model Scales and Input Resolution.
 
 | Model Size | Image Size | mAP@50 ↑           | mAP@50:95 ↑        |
 |------|-----------|--------------------|--------------------|
@@ -106,7 +106,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 |     | 1280      | 0.926 / 0.940 (+1.4%) | 0.743 / 0.757 (+1.4%) |
 
 
-##### Task6: Comparison with Aerial-Specific SOTA Methods on Aerial Vehicle Dataset.
+#### Task6: Comparison with Aerial-Specific SOTA Methods on Aerial Vehicle Dataset.
 
 | Method            | mAP@50 ↑ | mAP@50:95 ↑ |
 |----------------------|----------|-------------|
@@ -120,7 +120,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 
 
 ---
-### Visualization of the six fine-grained vehicle categories in the specialized dataset.
+#### Visualization of the six fine-grained vehicle categories in the specialized dataset.
 <p align="center">
   <img src="pictures/Dataset_Visualization.png" width="400"/>
   <br>
