@@ -4,45 +4,54 @@
 This repository(MDAD) is the official PyTorch implementation of the paper "A Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles".  
 
 ---
+
+
+### Overall architecture of the proposed Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles.
+
+<p align="center">
+  <img src="pictures/MDAD.png" width="400"/>
+  <br>
+  <em>Overall architecture of the proposed Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles.</em>
+</p>
+
 ---
 
-#### Overall architecture of the proposed Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles.
+### Core Modules
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="pictures/CDFA.png" width="300"/><br>
+      <em>CDFA Module</em>
+    </td>
+    <td align="center">
+      <img src="pictures/SDFM.png" width="300"/><br>
+      <em>SDFM Module</em>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="pictures/SEA.png" width="300"/><br>
+      <em>SEA Module</em>
+    </td>
+    <td align="center">
+      <img src="pictures/Visualization.png" width="300"/><br>
+      <em>Gaussian Modeling & NWD</em>
+    </td>
+  </tr>
+</table>
+
+---
+
+### Visualization of the six fine-grained vehicle categories in the specialized dataset.
 
 <p align="center">
-  <img src="pictures/MDAD.png" alt="MDAD" width="200"/>
+  <img src="pictures/Dataset_Visualization.png" width="600"/>
+  <br>
+  <em>Visualization of the six fine-grained vehicle categories in the specialized dataset.</em>
 </p>
 
-#### The schematic diagram of the Contrast-Driven Feature Aggregation (CDFA) module.
-
-<p align="center">
-  <img src="pictures/CDFA.png" alt="CDFA" width="200"/>
-</p>
-
-#### The detailed structure of the Scale-Aware Dynamic Fusion Module (SDFM).
-
-<p align="center">
-  <img src="pictures/SDFM.png" alt="SDFM" width="200"/>
-</p>
-
-#### The detailed structure of the Semantic Enhancement and Aggregation Module.
-
-<p align="center">
-  <img src="pictures/SEA.png" alt="SEA" width="200"/>
-</p>
-
-#### Visualization of Gaussian modeling and Wasserstein distance calculation for bounding boxes.
-
-<p align="center">
-  <img src="pictures/Visualization.png" alt="Visualization" width="200"/>
-</p>
-
-#### Visualization of the six fine-grained vehicle categories in the specialized dataset.
-
-<p align="center">
-  <img src="pictures/Dataset_Visualization.png" alt="Dataset" width="300"/>
-</p>
-
-
+---
 ---
 ## Dataset
 
