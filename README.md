@@ -6,7 +6,7 @@ This repository(MADA) is the official PyTorch implementation of the paper "A Mul
 ---
 ### Overall architecture of the proposed Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles.
 
-<img src="pictures/MADA.png" alt="MADA" width="600" height="400"/>
+<img src="pictures/MADA.png" alt="MADA" width="500" height="300"/>
 
 
 
