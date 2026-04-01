@@ -40,10 +40,7 @@ This repository(MDAD) is the official PyTorch implementation of the paper "A Mul
 
 To comprehensively evaluate the performance of the proposed method in complex aerial scenarios, we utilize a specialized aerial vehicle dataset comprising 2,698 high-resolution images captured by UAVs from top-down perspectives. The dataset covers diverse scenes, including urban roads, highways, and parking lots, under varying lighting conditions. It focuses on six key vehicle categories (articulated-bus, car, small-bus, bus, freight, and truck), with filtering applied to emphasize fine-grained classification challenges. Representative visual samples of these categories are illustrated in Figure 6. The dataset exhibits typical aerial characteristics such as extremely small object sizes, high density, and significant fine-grained visual confusion. Following a standard protocol, the dataset is randomly divided into training, validation, and testing sets with a ratio of 7:1:2.
 
-
-
-
-
+---
 
 ##### Task1: Performance Comparison of Different Feature Enhancement Strategies on Backbone.
 
@@ -60,7 +57,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | + Contrast Driven Feature Aggregation     | **0.840**| **0.616**   |
 
 
-#### Task2: Ablation Study on High-Level and Low-Level Feature Fusion Mechanisms.
+##### Task2: Ablation Study on High-Level and Low-Level Feature Fusion Mechanisms.
 
 | High-Level and Low-Level FeatureFusion (Improvement 2)      | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------|----------|-------------|
@@ -69,7 +66,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | **+ SDFM**        | **0.843**| **0.631**   |
   
 
-#### Task3: Impact of Different Detection Head Architectures on Detection Performance.
+##### Task3: Impact of Different Detection Head Architectures on Detection Performance.
 
 | Detection Head (Improvement 3)          | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------------|----------|-------------|
@@ -81,7 +78,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | **+ Detect-SEAM**       | **0.848**| **0.635**   |
   
 
-#### Task4: Comparative Analysis of Different Bounding Box Regression Loss Functions.
+##### Task4: Comparative Analysis of Different Bounding Box Regression Loss Functions.
 
 | Loss Function(Improvement 4)     | mAP@50 ↑ | mAP@50:95 ↑ |
 |--------------------------------------|----------|-------------|
@@ -92,7 +89,9 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | + SIoU                               | 0.839    | 0.603       |
 | + ShapeIoU                           | 0.845    | 0.616       |
 | **+ NWD**                     | **0.857**| **0.642**   |
-#### Task5: Robustness Evaluation Under Varying Model Scales and Input Resolution.
+
+
+##### Task5: Robustness Evaluation Under Varying Model Scales and Input Resolution.
 
 | Model Size | Image Size | mAP@50 ↑           | mAP@50:95 ↑        |
 |------|-----------|--------------------|--------------------|
@@ -107,7 +106,7 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 |     | 1280      | 0.926 / 0.940 (+1.4%) | 0.743 / 0.757 (+1.4%) |
 
 
-#### Task6: Comparison with Aerial-Specific SOTA Methods on Aerial Vehicle Dataset.
+##### Task6: Comparison with Aerial-Specific SOTA Methods on Aerial Vehicle Dataset.
 
 | Method            | mAP@50 ↑ | mAP@50:95 ↑ |
 |----------------------|----------|-------------|
