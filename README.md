@@ -4,15 +4,11 @@
 This repository(MDAD) is the official PyTorch implementation of the paper "A Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles".  
 
 ---
-
 <p align="center">
   <img src="pictures/MDAD.png" width="400"/>
   <br>
   <em>Overall architecture of the proposed Multi-Dimensional Adaptive Detector for Low-Altitude Fine-Grained Vehicles.</em>
 </p>
-
----
-
 
 <table align="center">
   <tr>
@@ -37,12 +33,8 @@ This repository(MDAD) is the official PyTorch implementation of the paper "A Mul
   </tr>
 </table>
 
----
-
-### Visualization of the six fine-grained vehicle categories in the specialized dataset.
-
 <p align="center">
-  <img src="pictures/Dataset_Visualization.png" width="600"/>
+  <img src="pictures/Dataset_Visualization.png" width="400"/>
   <br>
   <em>Visualization of the six fine-grained vehicle categories in the specialized dataset.</em>
 </p>
