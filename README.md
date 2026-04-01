@@ -119,6 +119,135 @@ To comprehensively evaluate the performance of the proposed method in complex ae
 | YOLO-DD              | 0.850    | 0.630       |
 | **Ours**             | **0.857**| **0.642**   |
 
+<table align="center">
+  <tr>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>Backbone (Improvement 1)</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>YOLOv11 (Baseline)</td><td>0.828</td><td>0.602</td></tr>
+  <tr><td>+ Adaptive Fine-Grained Channel Attention</td><td>0.830</td><td>0.611</td></tr>
+  <tr><td>+ Channel Prior Convolutional Attention</td><td>0.838</td><td>0.608</td></tr>
+  <tr><td>+ MultiPath Coordinate Attention</td><td>0.830</td><td>0.603</td></tr>
+  <tr><td>+ SimAM</td><td>0.830</td><td>0.605</td></tr>
+  <tr><td>+ TripletAttention</td><td>0.832</td><td>0.604</td></tr>
+  <tr><td>+ BiLevelRoutingAttention</td><td>0.825</td><td>0.605</td></tr>
+  <tr><td>+ Vision Transformer w/ Deformable Attn</td><td>0.838</td><td>0.610</td></tr>
+  <tr><td><b>+ Contrast Driven Feature Aggregation</b></td><td><b>0.840</b></td><td><b>0.616</b></td></tr>
+</table>
+
+<p align="center"><em>Task1: Performance Comparison of Different Feature Enhancement Strategies on Backbone.</em></p>
+
+    </td>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>High-Level and Low-Level Feature Fusion (Improvement 2)</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>YOLO + CDFA (Baseline)</td><td>0.840</td><td>0.616</td></tr>
+  <tr><td>+ CGAFusion</td><td>0.841</td><td>0.614</td></tr>
+  <tr><td><b>+ SDFM</b></td><td><b>0.843</b></td><td><b>0.631</b></td></tr>
+</table>
+
+<p align="center"><em>Task2: Ablation Study on High-Level and Low-Level Feature Fusion Mechanisms.</em></p>
+
+    </td>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>Detection Head (Improvement 3)</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>YOLO + CDFA + SDFM (Baseline)</td><td>0.843</td><td>0.631</td></tr>
+  <tr><td>+ Detect-MultiSEAM</td><td>0.826</td><td>0.596</td></tr>
+  <tr><td>+ Detect-LADH</td><td>0.824</td><td>0.594</td></tr>
+  <tr><td>+ Detect-RSCD</td><td>0.780</td><td>0.532</td></tr>
+  <tr><td>+ Detect-LSCD</td><td>0.843</td><td>0.621</td></tr>
+  <tr><td><b>+ Detect-SEAM</b></td><td><b>0.848</b></td><td><b>0.635</b></td></tr>
+</table>
+
+<p align="center"><em>Task3: Impact of Different Detection Head Architectures on Detection Performance.</em></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>Loss Function (Improvement 4)</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>YOLO + CDFA + SDFM + SEAM (Baseline)</td><td>0.848</td><td>0.635</td></tr>
+  <tr><td>+ GIoU</td><td>0.844</td><td>0.616</td></tr>
+  <tr><td>+ DIoU</td><td>0.837</td><td>0.611</td></tr>
+  <tr><td>+ EIoU</td><td>0.840</td><td>0.604</td></tr>
+  <tr><td>+ SIoU</td><td>0.839</td><td>0.603</td></tr>
+  <tr><td>+ ShapeIoU</td><td>0.845</td><td>0.616</td></tr>
+  <tr><td><b>+ NWD</b></td><td><b>0.857</b></td><td><b>0.642</b></td></tr>
+</table>
+
+<p align="center"><em>Task4: Comparative Analysis of Different Bounding Box Regression Loss Functions.</em></p>
+
+    </td>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>Model Size</th>
+    <th>Image Size</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>n</td><td>640</td><td>0.828 / 0.857 (+2.9%)</td><td>0.602 / 0.642 (+4.0%)</td></tr>
+  <tr><td>n</td><td>960</td><td>0.882 / 0.906 (+2.4%)</td><td>0.653 / 0.673 (+2.0%)</td></tr>
+  <tr><td>n</td><td>1280</td><td>0.900 / 0.917 (+1.7%)</td><td>0.684 / 0.695 (+1.1%)</td></tr>
+  <tr><td>s</td><td>640</td><td>0.876 / 0.901 (+2.5%)</td><td>0.651 / 0.669 (+1.8%)</td></tr>
+  <tr><td>s</td><td>960</td><td>0.920 / 0.932 (+1.2%)</td><td>0.708 / 0.727 (+1.9%)</td></tr>
+  <tr><td>s</td><td>1280</td><td>0.924 / 0.935 (+1.1%)</td><td>0.727 / 0.741 (+1.4%)</td></tr>
+  <tr><td>m</td><td>640</td><td>0.890 / 0.903 (+1.3%)</td><td>0.682 / 0.696 (+1.4%)</td></tr>
+  <tr><td>m</td><td>960</td><td>0.924 / 0.937 (+1.3%)</td><td>0.732 / 0.744 (+1.2%)</td></tr>
+  <tr><td>m</td><td>1280</td><td>0.926 / 0.940 (+1.4%)</td><td>0.743 / 0.757 (+1.4%)</td></tr>
+</table>
+
+<p align="center"><em>Task5: Robustness Evaluation Under Varying Model Scales and Input Resolution.</em></p>
+
+    </td>
+    <td valign="top" align="center">
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>mAP@50 ↑</th>
+    <th>mAP@50:95 ↑</th>
+  </tr>
+  <tr><td>YOLOv11-n (Baseline)</td><td>0.828</td><td>0.602</td></tr>
+  <tr><td>UAV-YOLO</td><td>0.835</td><td>0.610</td></tr>
+  <tr><td>Drone-YOLO</td><td>0.840</td><td>0.615</td></tr>
+  <tr><td>TPH-YOLOv5-Air</td><td>0.846</td><td>0.625</td></tr>
+  <tr><td>EBR-YOLO</td><td>0.843</td><td>0.620</td></tr>
+  <tr><td>YOLO-DD</td><td>0.850</td><td>0.630</td></tr>
+  <tr><td><b>Ours</b></td><td><b>0.857</b></td><td><b>0.642</b></td></tr>
+</table>
+
+<p align="center"><em>Task6: Comparison with Aerial-Specific SOTA Methods on Aerial Vehicle Dataset.</em></p>
+
+    </td>
+  </tr>
+</table>
+
+
 
 <p align="center">
   <img src="pictures/Dataset_Visualization.png" width="400"/>
