@@ -136,7 +136,7 @@ If you have any question, please discuss with me by sending email to wq@cap.edu.
 Many thanks to their excellent works
 
 
-* **YOLOv11** – [Code](https://github.com/ultralytics/ultralytics)
+* **ultralytics** – [Code](https://github.com/ultralytics/ultralytics)
 
 
 
