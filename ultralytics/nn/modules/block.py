@@ -24,6 +24,7 @@ __all__ = (
     "DFL",
     "ELAN1",
     "PSA",
+    "SDFM",
     "SPP",
     "SPPELAN",
     "SPPF",
@@ -42,6 +43,7 @@ __all__ = (
     "C3x",
     "CBFuse",
     "CBLinear",
+    "ContrastDrivenFeatureAggregation",
     "ContrastiveHead",
     "GhostBottleneck",
     "HGBlock",
@@ -54,8 +56,6 @@ __all__ = (
     "ResNetLayer",
     "SCDown",
     "TorchVision",
-    'ContrastDrivenFeatureAggregation',
-    'SDFM',
 )
 
 
@@ -2073,9 +2073,10 @@ class RealNVP(nn.Module):
 
 ######################################## ConDSeg start ########################################
 
+
 class HaarWaveletConv(nn.Module):
     def __init__(self, in_channels, grad=False):
-        super(HaarWaveletConv, self).__init__()
+        super().__init__()
         self.in_channels = in_channels
 
         self.haar_weights = torch.ones(4, 1, 2, 2)
@@ -2112,8 +2113,7 @@ class HaarWaveletConv(nn.Module):
 
 
 class ContrastDrivenFeatureAggregation(nn.Module):
-    def __init__(self, dim, num_heads=8, kernel_size=3, padding=1, stride=1,
-                 attn_drop=0., proj_drop=0.):
+    def __init__(self, dim, num_heads=8, kernel_size=3, padding=1, stride=1, attn_drop=0.0, proj_drop=0.0):
         super().__init__()
         self.dim = dim
         self.num_heads = num_heads
@@ -2122,13 +2122,13 @@ class ContrastDrivenFeatureAggregation(nn.Module):
         self.stride = stride
         self.head_dim = dim // num_heads
 
-        self.scale = self.head_dim ** -0.5
+        self.scale = self.head_dim**-0.5
 
         self.wavelet = HaarWaveletConv(dim)
 
         self.v = nn.Linear(dim, dim)
-        self.attn_fg = nn.Linear(dim, kernel_size ** 4 * num_heads)
-        self.attn_bg = nn.Linear(dim, kernel_size ** 4 * num_heads)
+        self.attn_fg = nn.Linear(dim, kernel_size**4 * num_heads)
+        self.attn_bg = nn.Linear(dim, kernel_size**4 * num_heads)
 
         self.attn_drop = nn.Dropout(attn_drop)
         self.proj = nn.Linear(dim, dim)
@@ -2158,17 +2158,21 @@ class ContrastDrivenFeatureAggregation(nn.Module):
 
         v = self.v(x).permute(0, 3, 1, 2)
 
-        v_unfolded = self.unfold(v).reshape(B, self.num_heads, self.head_dim,
-                                            self.kernel_size * self.kernel_size,
-                                            -1).permute(0, 1, 4, 3, 2)
-        attn_fg = self.compute_attention(fg, B, H, W, C, 'fg')
+        v_unfolded = (
+            self.unfold(v)
+            .reshape(B, self.num_heads, self.head_dim, self.kernel_size * self.kernel_size, -1)
+            .permute(0, 1, 4, 3, 2)
+        )
+        attn_fg = self.compute_attention(fg, B, H, W, C, "fg")
 
         x_weighted_fg = self.apply_attention(attn_fg, v_unfolded, B, H, W, C)
 
-        v_unfolded_bg = self.unfold(x_weighted_fg.permute(0, 3, 1, 2)).reshape(B, self.num_heads, self.head_dim,
-                                                                               self.kernel_size * self.kernel_size,
-                                                                               -1).permute(0, 1, 4, 3, 2)
-        attn_bg = self.compute_attention(bg, B, H, W, C, 'bg')
+        v_unfolded_bg = (
+            self.unfold(x_weighted_fg.permute(0, 3, 1, 2))
+            .reshape(B, self.num_heads, self.head_dim, self.kernel_size * self.kernel_size, -1)
+            .permute(0, 1, 4, 3, 2)
+        )
+        attn_bg = self.compute_attention(bg, B, H, W, C, "bg")
 
         x_weighted_bg = self.apply_attention(attn_bg, v_unfolded_bg, B, H, W, C)
 
@@ -2179,40 +2183,42 @@ class ContrastDrivenFeatureAggregation(nn.Module):
         return out
 
     def compute_attention(self, feature_map, B, H, W, C, feature_type):
-        attn_layer = self.attn_fg if feature_type == 'fg' else self.attn_bg
+        attn_layer = self.attn_fg if feature_type == "fg" else self.attn_bg
         h, w = math.ceil(H / self.stride), math.ceil(W / self.stride)
 
         feature_map_pooled = self.pool(feature_map.permute(0, 3, 1, 2)).permute(0, 2, 3, 1)
 
-        attn = attn_layer(feature_map_pooled).reshape(B, h * w, self.num_heads,
-                                                      self.kernel_size * self.kernel_size,
-                                                      self.kernel_size * self.kernel_size).permute(0, 2, 1, 3, 4)
+        attn = (
+            attn_layer(feature_map_pooled)
+            .reshape(B, h * w, self.num_heads, self.kernel_size * self.kernel_size, self.kernel_size * self.kernel_size)
+            .permute(0, 2, 1, 3, 4)
+        )
         attn = attn * self.scale
         attn = F.softmax(attn, dim=-1)
         attn = self.attn_drop(attn)
         return attn
 
     def apply_attention(self, attn, v, B, H, W, C):
-        x_weighted = (attn @ v).permute(0, 1, 4, 3, 2).reshape(
-            B, self.dim * self.kernel_size * self.kernel_size, -1)
-        x_weighted = F.fold(x_weighted, output_size=(H, W), kernel_size=self.kernel_size,
-                            padding=self.padding, stride=self.stride)
+        x_weighted = (attn @ v).permute(0, 1, 4, 3, 2).reshape(B, self.dim * self.kernel_size * self.kernel_size, -1)
+        x_weighted = F.fold(
+            x_weighted, output_size=(H, W), kernel_size=self.kernel_size, padding=self.padding, stride=self.stride
+        )
         x_weighted = self.proj(x_weighted.permute(0, 2, 3, 1))
         x_weighted = self.proj_drop(x_weighted)
         return x_weighted
+
 
 ######################################## ConDSeg end ########################################
 
 
 ######################################## superficial detail fusion module start ########################################
 
+
 class SDFM(nn.Module):
-    '''
-    superficial detail fusion module
-    '''
+    """Superficial detail fusion module."""
 
     def __init__(self, channels=64, r=4):
-        super(SDFM, self).__init__()
+        super().__init__()
         inter_channels = int(channels // r)
 
         self.Recalibrate = nn.Sequential(
@@ -2240,14 +2246,15 @@ class SDFM(nn.Module):
         _, c, _, _ = x1.shape
         input = torch.cat([x1, x2], dim=1)
         recal_w = self.Recalibrate(input)
-        recal_input = recal_w * input ## 先对特征进行一步自校正
+        recal_input = recal_w * input  ## 先对特征进行一步自校正
         recal_input = recal_input + input
-        x1, x2 = torch.split(recal_input, c, dim =1)
-        agg_input = self.channel_agg(recal_input) ## 进行特征压缩 因为只计算一个特征的权重
+        x1, x2 = torch.split(recal_input, c, dim=1)
+        agg_input = self.channel_agg(recal_input)  ## 进行特征压缩 因为只计算一个特征的权重
         local_w = self.local_att(agg_input)  ## 局部注意力 即spatial attention
-        global_w = self.global_att(agg_input) ## 全局注意力 即channel attention
-        w = self.sigmoid(local_w * global_w) ## 计算特征x1的权重
-        xo = w * x1 + (1 - w) * x2 ## fusion results ## 特征聚合
+        global_w = self.global_att(agg_input)  ## 全局注意力 即channel attention
+        w = self.sigmoid(local_w * global_w)  ## 计算特征x1的权重
+        xo = w * x1 + (1 - w) * x2  ## fusion results ## 特征聚合
         return xo
+
 
 ######################################## superficial detail fusion module end ########################################
